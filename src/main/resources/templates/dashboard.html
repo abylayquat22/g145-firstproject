@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Notebooks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<h1>Notebooks Dashboard</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Price</th>
+        <th>Processor</th>
+        <th>RAM</th>
+        <th>Memory</th>
+        <th>Graphics Card</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notebook : ${notebooks}">
+        <td th:text="${notebook.name}"></td>
+        <td th:text="${notebook.brand}"></td>
+        <td th:text="'$' + ${notebook.price}"></td>
+        <td th:text="${notebook.processor}"></td>
+        <td th:text="${notebook.ram}"></td>
+        <td th:text="${notebook.memory}"></td>
+        <td th:text="${notebook.graphicsCard}"></td>
+        <td th:text="${notebook.description}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
