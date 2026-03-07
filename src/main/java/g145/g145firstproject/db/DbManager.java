@@ -11,7 +11,7 @@ public class DbManager {
     @Getter
     private static List<Student> students = new ArrayList<>(List.of(
             new Student(1L,"Lily","Alex",98,"A"),
-            new Student(1L,"Lily","Alex",98,"A"),
+            new Student(2L,"Lily2","Alex",98,"A"),
             new Student(3L,"Tom","Kaultz",85,"B"),
             new Student(4L,"Bill","Hero",100,"A"),
             new Student(5L,"Meru","Alex",98,"A")
