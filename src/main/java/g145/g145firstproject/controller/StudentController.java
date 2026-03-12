@@ -2,30 +2,44 @@ package g145.g145firstproject.controller;
 
 import g145.g145firstproject.db.DbManager;
 import g145.g145firstproject.dto.Student;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController // @Controller + @ResponseBody
+@RequestMapping("/students")
 public class StudentController {
-    @GetMapping("/student")
-    public String student(Model model){
-        List<Student> students= DbManager.getStudents();
-        model.addAttribute("students",students);
-        return "student";
-    }
-    @GetMapping("/student/add")
-    public String studentAddPage(){
 
-       return "studentaddpage";
+    @GetMapping
+    public List<Student> student() {
+        List<Student> students = DbManager.getStudents();
+        return students;
     }
-    @PostMapping("/student/add")
-    public String addstudent(Student student){
+
+    @GetMapping("/{id}")
+    public Student getStudent(@PathVariable Long id) {
+        Student student = DbManager.getStudentById(id);
+        return student;
+    }
+
+    @GetMapping("/search")
+    public List<Student> getStudentsByName(@RequestParam String name) {
+        List<Student> students = DbManager.getStudentsByName(name);
+        return students;
+    }
+
+    @PostMapping
+    public void addStudent(@RequestBody Student student) {
         DbManager.addstudent(student);
+    }
 
-        return "redirect:/student";
+    @PutMapping
+    public void editStudent(@RequestBody Student student) {
+        DbManager.editStudent(student);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteStudentById(@PathVariable Long id) {
+        DbManager.deleteById(id);
     }
 }
