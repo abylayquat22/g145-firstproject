@@ -2,6 +2,7 @@ package g145.g145firstproject.controller;
 
 import g145.g145firstproject.db.Task;
 import g145.g145firstproject.dbo.DbManager;
+import g145.g145firstproject.dbo.TaskDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +30,15 @@ public class TaskController {
     public ResponseEntity<Void> deleteTaskById(@PathVariable Long id){
         DbManager.deleteTask(id);
         return ResponseEntity.status(204).build();
+    }
+    @GetMapping("/{id}")
+    public Task getById(@PathVariable Long id){
+    Task task = DbManager.getTaskById(id);
+    return task;
+    }
+    @GetMapping("/deadlineDate")
+    public List<TaskDTO> getTasksUntilData(@RequestParam String deadlineDate){
+        List<TaskDTO> tasks = DbManager.getTasksUtilData(deadlineDate);
+        return tasks;
     }
 }

@@ -4,8 +4,11 @@ import g145.g145firstproject.db.Task;
 import g145.g145firstproject.exception.NotFoundException;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DbManager {
     private static Long id = 3L;
@@ -44,5 +47,34 @@ public class DbManager {
                 .findFirst()
                 .orElseThrow(()->new NotFoundException("Task not found ID: "+ id));
         tasks.remove(task);
+    }
+
+    public static Task getTaskById(Long id) {
+        Task task =tasks.stream()
+                .filter(t->t.getId().equals(id))
+                .findFirst()
+                .orElseThrow(()->new NotFoundException("Task not found ID: "+ id));
+        return task;
+    }
+
+    public static List<TaskDTO> getTasksUtilData(String deadlineDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        LocalDate date = LocalDate.parse(deadlineDate,formatter);
+
+       return tasks.stream()
+                .map(task -> mapToDTO(task))
+                .filter(taskDTO -> taskDTO.getDeadlineDate().isBefore(date))
+                .toList();
+    }
+
+    private static TaskDTO mapToDTO(Task task) {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setName(task.getName());
+        taskDTO.setId(task.getId());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        LocalDate date = LocalDate.parse(task.getDeadlineDate(),formatter);
+        taskDTO.setDeadlineDate(date);
+        taskDTO.setCompleted(task.isCompleted());
+        return taskDTO;
     }
 }
