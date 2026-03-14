@@ -2,6 +2,8 @@ package g145.g145firstproject.controller;
 
 import g145.g145firstproject.db.DbManager;
 import g145.g145firstproject.dto.Student;
+import g145.g145firstproject.exception.NotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,35 +13,38 @@ import java.util.List;
 public class StudentController {
 
     @GetMapping
-    public List<Student> student() {
+    public ResponseEntity<List<Student>> students() {
         List<Student> students = DbManager.getStudents();
-        return students;
+        return ResponseEntity.status(200).body(students);
     }
 
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable Long id) {
-        Student student = DbManager.getStudentById(id);
-        return student;
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+        Student student = null;
+        return ResponseEntity.status(200).body(student);
     }
 
     @GetMapping("/search")
-    public List<Student> getStudentsByName(@RequestParam String name) {
+    public ResponseEntity<List<Student>> getStudentsByName(@RequestParam String name) {
         List<Student> students = DbManager.getStudentsByName(name);
-        return students;
+        return ResponseEntity.status(200).body(students);
     }
 
     @PostMapping
-    public void addStudent(@RequestBody Student student) {
+    public ResponseEntity<Void> addStudent(@RequestBody Student student) {
         DbManager.addstudent(student);
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping
-    public void editStudent(@RequestBody Student student) {
-        DbManager.editStudent(student);
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
+        Student updated = DbManager.editStudent(student);
+        return ResponseEntity.status(200).body(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudentById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
         DbManager.deleteById(id);
+        return ResponseEntity.status(204).build();
     }
 }

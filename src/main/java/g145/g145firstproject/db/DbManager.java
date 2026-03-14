@@ -1,12 +1,16 @@
 package g145.g145firstproject.db;
 
 import g145.g145firstproject.dto.Student;
+import g145.g145firstproject.exception.BadRequestException;
+import g145.g145firstproject.exception.NotFoundException;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 public class DbManager {
     private static Long id = 6L;
 
@@ -20,11 +24,25 @@ public class DbManager {
     ));
 
     public static void addstudent(Student student) {
+        log.info("Started addstudent method");
+        if (student.getExam() == null) {
+            throw new BadRequestException("Exam can not be null");
+        }
+
+        if (student.getName() == null) {
+            throw new BadRequestException("Name can not be null");
+        }
+
+        if (student.getName().isBlank()) {
+            throw new BadRequestException("Name can not be empty");
+        }
+
         student.setId(id);
         id++;
         String mark = calculateExam(student.getExam());
         student.setMark(mark);
         students.add(student);
+        log.info("Competed addstudent method");
     }
     
     private static String calculateExam(Integer exam) {
@@ -49,10 +67,10 @@ public class DbManager {
         return students.stream()
                 .filter(s -> s.getId().equals(id))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new NotFoundException("Student not found. ID: " + id));
     }
 
-    public static void editStudent(Student student) {
+    public static Student editStudent(Student student) {
         Student current = getStudentById(student.getId());
         if (student.getName() != null) {
             current.setName(student.getName());
@@ -67,6 +85,8 @@ public class DbManager {
             current.setExam(student.getExam());
             current.setMark(mark);
         }
+
+        return current;
     }
 
     public static void deleteById(Long id) {
@@ -75,7 +95,11 @@ public class DbManager {
 //            students.remove(student);
 //        }
 
-        students.removeIf(s -> s.getId().equals(id));
+//        students.removeIf(s -> s.getId().equals(id));
+
+
+        Student student = getStudentById(id);
+        students.remove(student);
     }
 
     public static List<Student> getStudentsByName(String name) {
