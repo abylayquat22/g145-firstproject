@@ -3,6 +3,8 @@ package g145.g145firstproject.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "NOTEBOOKS")
 @AllArgsConstructor
@@ -38,4 +40,10 @@ public class Notebook {
     @Column(name = "GRAPHICS_CARD")
     private String graphicsCard;
 
+    @JoinColumn(name = "BRAND_ID")
+    @ManyToOne
+    private Brand brand;
+
+    @ManyToMany
+    private List<Country> collectingCountries;
 }
