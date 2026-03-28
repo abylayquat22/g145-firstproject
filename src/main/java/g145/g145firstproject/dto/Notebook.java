@@ -12,11 +12,11 @@ import lombok.experimental.FieldDefaults;
 public class Notebook {
     Long id;
     String name;
+    String description;
     String brand;
     Double price;
     String memory;
     String ram;
-    String description;
     String processor;
     String graphicsCard;
 }
