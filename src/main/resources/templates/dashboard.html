@@ -103,7 +103,7 @@
     <form action="/notebooks/search" method="get">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter notebook name..."
+            <input type="text" id="name" name="name" placeholder="Enter notebookSearchRequest name..."
                    th:value="${param.name != null ? param.name[0] : ''}">
         </div>
 
@@ -133,12 +133,12 @@
     <tr th:if="${notebooks.empty}">
         <td colspan="4" class="no-results">No notebooks found matching your criteria</td>
     </tr>
-    <tr th:each="notebook : ${notebooks}">
-        <td th:text="${notebook.name}"></td>
-        <td th:text="${notebook.brand}"></td>
-        <td th:text="'$' + ${notebook.price}"></td>
+    <tr th:each="notebookSearchRequest : ${notebooks}">
+        <td th:text="${notebookSearchRequest.name}"></td>
+        <td th:text="${notebookSearchRequest.brand}"></td>
+        <td th:text="'$' + ${notebookSearchRequest.price}"></td>
         <td>
-            <a th:href="${'/notebooks/details/' + notebook.getId()}">Details</a>
+            <a th:href="${'/notebooks/details/' + notebookSearchRequest.getId()}">Details</a>
         </td>
     </tr>
     </tbody>

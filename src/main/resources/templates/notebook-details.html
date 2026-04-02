@@ -17,59 +17,59 @@
 </head>
 <body>
 <div class="container">
-    <div th:if="${notebook != null}">
+    <div th:if="${notebookSearchRequest != null}">
         <div class="header">
-            <h2 th:text="${notebook.name}">Название ноутбука</h2>
+            <h2 th:text="${notebookSearchRequest.name}">Название ноутбука</h2>
         </div>
 
         <div class="field">
             <span class="label">ID:</span>
-            <span class="value" th:text="${notebook.id}">1</span>
+            <span class="value" th:text="${notebookSearchRequest.id}">1</span>
         </div>
 
         <div class="field">
             <span class="label">Бренд:</span>
-            <span class="value" th:text="${notebook.brand}">Apple</span>
+            <span class="value" th:text="${notebookSearchRequest.brand}">Apple</span>
         </div>
 
         <div class="field">
             <span class="label">Цена:</span>
             <span class="value">
-                    <span th:if="${notebook.price != null}" th:text="${#numbers.formatDecimal(notebook.price, 0, 2)} + ' ₽'">99999.99 ₽</span>
-                    <span th:if="${notebook.price == null}">Не указана</span>
+                    <span th:if="${notebookSearchRequest.price != null}" th:text="${#numbers.formatDecimal(notebookSearchRequest.price, 0, 2)} + ' ₽'">99999.99 ₽</span>
+                    <span th:if="${notebookSearchRequest.price == null}">Не указана</span>
                 </span>
         </div>
 
         <div class="field">
             <span class="label">Процессор:</span>
-            <span class="value" th:text="${notebook.processor ?: 'Не указан'}">Intel Core i7</span>
+            <span class="value" th:text="${notebookSearchRequest.processor ?: 'Не указан'}">Intel Core i7</span>
         </div>
 
         <div class="field">
             <span class="label">Оперативная память:</span>
-            <span class="value" th:text="${notebook.ram ?: 'Не указана'}">16 GB</span>
+            <span class="value" th:text="${notebookSearchRequest.ram ?: 'Не указана'}">16 GB</span>
         </div>
 
         <div class="field">
             <span class="label">Накопитель:</span>
-            <span class="value" th:text="${notebook.memory ?: 'Не указан'}">512 GB SSD</span>
+            <span class="value" th:text="${notebookSearchRequest.memory ?: 'Не указан'}">512 GB SSD</span>
         </div>
 
         <div class="field">
             <span class="label">Видеокарта:</span>
-            <span class="value" th:text="${notebook.graphicsCard ?: 'Не указана'}">NVIDIA RTX 3060</span>
+            <span class="value" th:text="${notebookSearchRequest.graphicsCard ?: 'Не указана'}">NVIDIA RTX 3060</span>
         </div>
 
         <div class="field">
             <span class="label">Описание:</span>
-            <div style="margin-top: 5px;" class="value" th:text="${notebook.description ?: 'Описание отсутствует'}">Подробное описание ноутбука...</div>
+            <div style="margin-top: 5px;" class="value" th:text="${notebookSearchRequest.description ?: 'Описание отсутствует'}">Подробное описание ноутбука...</div>
         </div>
 
         <hr>
         <a href="/dashboard" class="back-link">← Назад к списку</a>
     </div>
 
-    <div th:if="${notebook == null}" class="not-found">
+    <div th:if="${notebookSearchRequest == null}" class="not-found">
         <h3>Ноутбук не найден</h3>
         <p>Запрошенный ноутбук отсутствует в базе данных.</p>
         <a href="/dashboard" class="back-link">← Вернуться к списку</a>

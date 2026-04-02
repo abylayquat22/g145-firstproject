@@ -9,14 +9,14 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Notebook {
-    Long id;
+public class NotebookSearchRequest {
+
+    String code;
     String name;
     String description;
-    String brand;
     Double price;
     String memory;
     String ram;
-    String processor;
     String graphicsCard;
+    Long brandId;
 }

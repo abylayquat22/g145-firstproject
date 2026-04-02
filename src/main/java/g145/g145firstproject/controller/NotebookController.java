@@ -1,9 +1,11 @@
 package g145.g145firstproject.controller;
 
+import g145.g145firstproject.dto.NotebookSearchRequest;
 import g145.g145firstproject.entity.Country;
 import g145.g145firstproject.entity.Notebook;
 import g145.g145firstproject.repository.CountryRepository;
 import g145.g145firstproject.repository.NotebookRepository;
+import g145.g145firstproject.repository.NotebookRepositorySearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ public class NotebookController {
 
     private final NotebookRepository notebookRepository;
     private final CountryRepository countryRepository;
+    private final NotebookRepositorySearch notebookRepositorySearch;
 
     @PostMapping
     public void addNotebook(@RequestBody Notebook notebook) {
@@ -63,5 +66,10 @@ public class NotebookController {
         Country country = countryRepository.findById(countryId).orElseThrow();
         notebook.getCollectingCountries().remove(country);
         notebookRepository.save(notebook);
+    }
+
+    @GetMapping("/search")
+    public List<Notebook> search(@RequestBody NotebookSearchRequest request) {
+        return notebookRepositorySearch.search(request);
     }
 }
